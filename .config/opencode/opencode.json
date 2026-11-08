@@ -1,0 +1,33 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "Authorization": "Bearer {file:~/.secrets/context7_key}"
+      }
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer {file:~/.secrets/exa_key}"
+      }
+    },
+    "firecrawl": {
+      "type": "remote",
+      "url": "https://mcp.firecrawl.dev/v2/mcp-oauth"
+    },
+    "arxiv": {
+      "type": "local",
+      "command": ["uvx", "arxiv-mcp-server"]
+    }
+  },
+  "instructions": ["~/.config/opencode/rules/workflow-rules.md"],
+  "permissions": [
+    { "action": "read", "resource": "*.secrets/*", "effect": "deny" },
+    { "action": "edit", "resource": "*.secrets/*", "effect": "deny" },
+    { "action": "shell", "resource": "*.secrets*", "effect": "deny" }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 3,
+  "final_space": true,
+  "palette": {
+    "user": "#6366f1",
+    "path": "#0ea5e9",
+    "git-clean": "#10b981",
+    "git-dirty": "#f59e0b",
+    "git-ahead": "#a855f7",
+    "git-behind": "#ef4444",
+    "cpu": "#06b6d4",
+    "ram": "#8b5cf6",
+    "time": "#475569",
+    "text": "#ffffff",
+    "ok": "#10b981",
+    "err": "#ef4444"
+  },
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:user",
+          "template": "\u256d\u2500"
+        },
+        {
+          "type": "session",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b0",
+          "foreground": "p:text",
+          "background": "p:user",
+          "template": " \uf007 {{ .UserName }} "
+        },
+        {
+          "type": "path",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "p:text",
+          "background": "p:path",
+          "template": " \uf07c {{ .Path }} ",
+          "properties": {
+            "style": "agnoster_short",
+            "max_depth": 2,
+            "folder_separator_icon": " \ue0b1 ",
+            "home_icon": "~"
+          }
+        },
+        {
+          "type": "git",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "p:text",
+          "background": "p:git-clean",
+          "background_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}p:git-dirty{{ end }}",
+            "{{ if gt .Ahead 0 }}p:git-ahead{{ end }}",
+            "{{ if gt .Behind 0 }}p:git-behind{{ end }}"
+          ],
+          "template": " \ue0a0 {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }} ",
+          "properties": {
+            "fetch_status": true,
+            "fetch_upstream_icon": true,
+            "branch_icon": ""
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "sysinfo",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b4",
+          "foreground": "p:text",
+          "background": "p:cpu",
+          "background_templates": [
+            "{{ if gt .Load1 8.0 }}p:err{{ end }}",
+            "{{ if gt .Load1 4.0 }}p:git-dirty{{ end }}"
+          ],
+          "template": " \uf4bc  CPU {{ round .Load1 2 }} ",
+          "properties": {
+            "precision": 2
+          }
+        },
+        {
+          "type": "sysinfo",
+          "style": "diamond",
+          "leading_diamond": " \ue0b6",
+          "trailing_diamond": "\ue0b4",
+          "foreground": "p:text",
+          "background": "p:ram",
+          "background_templates": [
+            "{{ if gt (int .PhysicalPercentUsed) 85 }}p:err{{ end }}",
+            "{{ if gt (int .PhysicalPercentUsed) 65 }}p:git-dirty{{ end }}"
+          ],
+          "template": " \uefc5  RAM {{ round .PhysicalPercentUsed 0 }}% ",
+          "properties": {
+            "precision": 0
+          }
+        }
+      ],
+      "overflow": "hide"
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "p:ok",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}p:err{{ end }}"
+          ],
+          "template": "\u2570\u2500\u276f",
+          "properties": {
+            "always_enabled": true
+          }
+        }
+      ]
+    }
+  ]
+}
