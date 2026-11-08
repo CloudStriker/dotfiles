@@ -2,11 +2,21 @@
 
 Bare-repo dotfiles: OpenCode config, agents, rules, skills, and shell setup.
 
+Third-party skills and their licenses: `.config/opencode/skills/THIRD-PARTY.md`
+
 ## Restore
+Use SSH if you have a key on GitHub, otherwise HTTPS:
+
     git clone --bare git@github.com:CloudStriker/dotfiles.git ~/.dotfiles
+    # or
+    git clone --bare https://github.com/CloudStriker/dotfiles.git ~/.dotfiles
+
     alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
     dot checkout            # move conflicting old files away first
     dot config status.showUntrackedFiles no
+
+`dot checkout` also brings the third-party skills in `.config/opencode/skills/`,
+so they do not need to be installed separately.
 
 ## Not in this repo (recreate by hand)
 - `~/.secrets/context7_key` and `~/.secrets/exa_key` (`chmod 600`)
