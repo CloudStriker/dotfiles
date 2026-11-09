@@ -21,13 +21,53 @@
     },
     "arxiv": {
       "type": "local",
-      "command": ["uvx", "arxiv-mcp-server"]
+      "command": [
+        "uvx",
+        "arxiv-mcp-server"
+      ]
+    },
+    "mineru": {
+      "type": "local",
+      "command": [
+        "docker", "run", "--rm", "-i",
+        "--user", "1000:1000",
+        "-e", "HOME=/tmp",
+        "-e", "PYTHONUNBUFFERED=1",
+        "-e", "MINERU_API_TOKEN",
+        "-e", "OUTPUT_DIR={env:HOME}/mineru-downloads",
+        "-v", "{env:HOME}/docs-in:{env:HOME}/docs-in:ro",
+        "-v", "{env:HOME}/mineru-downloads:{env:HOME}/mineru-downloads",
+        "ghcr.io/astral-sh/uv:python3.12-bookworm-slim",
+        "uvx", "mineru-open-mcp"
+      ],
+      "environment": {
+        "MINERU_API_TOKEN": "{file:~/.secrets/mineru_token}"
+      }
     }
   },
-  "instructions": ["~/.config/opencode/rules/workflow-rules.md"],
+  "instructions": [
+    "~/.config/opencode/rules/workflow-rules.md"
+  ],
   "permissions": [
-    { "action": "read", "resource": "*.secrets/*", "effect": "deny" },
-    { "action": "edit", "resource": "*.secrets/*", "effect": "deny" },
-    { "action": "shell", "resource": "*.secrets*", "effect": "deny" }
+    {
+      "action": "read",
+      "resource": "*.secrets/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*.secrets/*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "*.secrets*",
+      "effect": "deny"
+    },
+    {
+      "action": "experimental_image_generate",
+      "resource": "*",
+      "effect": "deny"
+    }
   ]
 }
