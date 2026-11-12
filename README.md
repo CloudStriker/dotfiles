@@ -75,10 +75,13 @@ Check both:
 
 ### Optional: Node.js
 `.bashrc` loads `nvm` only if it exists, so skip this unless a tool asks for Node.
-Check the nvm README for the current installer version (https://github.com/nvm-sh/nvm):
+Installer version and docs: https://github.com/nvm-sh/nvm
 
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
+    . ~/.nvm/nvm.sh        # or open a new terminal; `nvm` is a shell function
     nvm install --lts
+
+The installer already finds the `nvm` lines in `.bashrc`, so it does not add them twice.
 
 ## Secrets
 
