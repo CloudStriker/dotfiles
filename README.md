@@ -21,8 +21,64 @@ Use SSH if you have a key on GitHub, otherwise HTTPS:
 ## Not in this repo (recreate by hand)
 
 - `~/.secrets/context7_key`, `~/.secrets/exa_key`, and `~/.secrets/mineru_token` (see "Secrets" below)
-- Binaries: `uv`, `agy`, `claude`, `oh-my-posh`, `nvm`, `docker`
+- Binaries: `uv`, `oh-my-posh`, `opencode`, `claude`, `agy`, `btop`, and optionally `nvm` (see "Install tools" below), plus `docker` (see "MinerU")
 - `mkdir -p /tmp/agy-work ~/docs-in ~/mineru-downloads`
+
+## Install tools
+Do this before opening a new shell, because `.bashrc` runs `oh-my-posh` at startup.
+Both tools install to `~/.local/bin`, which `.bashrc` already adds to `PATH`.
+
+Each command below downloads a script and runs it. Read a script first with `curl ... | less`
+if you want to check it.
+
+`uv` (https://docs.astral.sh/uv/getting-started/installation/):
+
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+To pin a version, put it in the URL, for example `https://astral.sh/uv/0.13.7/install.sh`.
+Without `curl`, use `wget -qO- https://astral.sh/uv/install.sh | sh`.
+
+Oh My Posh (https://ohmyposh.dev/docs/installation/linux). The installer needs `curl`,
+`unzip`, `realpath`, and `dirname`:
+
+    sudo apt update && sudo apt install -y ca-certificates curl unzip
+    curl -s https://ohmyposh.dev/install.sh | bash -s
+
+`realpath` and `dirname` come with `coreutils`, which Ubuntu already has. The docs ask for an
+up to date `curl` and certificate store before running the script, which the `apt` line covers.
+
+The theme `~/.config/oh-my-posh/themes/clicknow.omp.json` and the `eval` line in `.bashrc`
+come with `dot checkout`. Its icons need a Nerd Font in the terminal app on the machine you
+connect from, not on the server.
+
+Check both:
+
+    uv --version
+    oh-my-posh version
+
+### Agents and CLIs
+- OpenCode: follow https://opencode.ai/docs/ (npm package, standalone binary, or Docker).
+  Connect each provider again with `/connect` in the TUI. Logins are not stored in this repo.
+- Claude Code (https://code.claude.com/docs/en/setup):
+
+      curl -fsSL https://claude.ai/install.sh | bash
+
+  Run `claude` once to sign in.
+- Antigravity CLI `agy` (https://antigravity.google/docs/getting-started/):
+
+      curl -fsSL https://antigravity.google/cli/install.sh | bash
+
+  It installs to `~/.local/bin/agy`. The first run asks you to sign in.
+- `btop`, from Ubuntu's own repository. Its theme is in the last section:
+
+      sudo apt install -y btop
+
+### Optional: Node.js
+`.bashrc` loads `nvm` only if it exists, so skip this unless a tool asks for Node.
+Check the nvm README for the current installer version (https://github.com/nvm-sh/nvm):
+
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash
+    nvm install --lts
 
 ## Secrets
 
