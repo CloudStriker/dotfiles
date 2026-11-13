@@ -68,7 +68,7 @@ Budget notes:
 - OpenCode `-free` models cost nothing, but may log or learn from prompts. Send them no proprietary code.
 - Claude (Pro plan) has a 5-hour limit and a weekly limit. The main session also runs on Claude (Sonnet, low or medium effort), so every Claude subagent call uses the same quota as the main session. Prefer non-Claude options when the task allows. Opus uses much more quota than Sonnet, and Sonnet more than Haiku.
 - OpenAI (Go plan) has a monthly limit. Only the Luna models are available.
-- Antigravity (`agy`, Google AI Pro) refreshes every 5 hours until a weekly limit. Complex tasks use more quota. Gemini 4 Argon is the scarce one.
+- Antigravity (`agy`, Google AI Pro) refreshes every 5 hours until a weekly limit. Complex tasks use more quota. Gemini 4 Argon is the scarce one. Hydrogen's quota is not measured yet; check `/usage` after the first days.
 - DeepSeek credit is prepaid and small ($5). It does not renew. Save it. Prices double during weekday peak hours (10:00-13:00 and 15:00-19:00 JST, Monday to Friday), so avoid DeepSeek then. Weekends and Chinese public holidays are off-peak. Keep the start of each prompt identical across calls to benefit from caching.
 
 Order for each task type. Start at the top and escalate only when the previous option fails or the task needs more reasoning:
@@ -79,8 +79,9 @@ Order for each task type. Start at the top and escalate only when the previous o
   3. `worker-sonnet` (Claude Agent, Sonnet), only if Haiku failed or the task needs real reasoning
   4. `worker` (DeepSeek Flash), last resort, when the cheaper ones failed
 - Reading or summarizing long documents and logs, UI copy brainstorming:
-  1. `agy` Gemini 3.8 Flash (always `high` effort)
-  2. `worker-free`
+  1. `agy` Gemini 4 Hydrogen (`low`; go straight to `high`, skipping `medium`, only if `low` failed or the task needs exact reading of a long document)
+  2. `agy` Gemini 3.8 Flash (`high`), only if Hydrogen is rate-limited or fails
+  3. `worker-free`
 - Multi-file architecture, or a bug that persists after 2 failed terminal checks:
   1. `agy` Gemini 4 Argon (`medium`)
   2. `architect` (Claude Agent, Opus), only if Argon is unavailable or out of quota. At most 1 call per task.
@@ -104,14 +105,14 @@ agy --mode plan --sandbox --print-timeout 300s --model <model> \
 - Start every prompt with: "Analysis only. Do not create, edit, or delete any file."
 - After each call, list the scratch directory. If it changed unexpectedly, tell the user.
 - Never use `--dangerously-skip-permissions`.
-- Gemini 3.8 Flash: always use `gemini-3.8-flash-high`. Gemini 4 Argon: `gemini-4-argon-medium` by default, `low` for simple questions, `high` only when the user asks.
+- Gemini 4 Hydrogen: `gemini-4-hydrogen-low` by default; `gemini-4-hydrogen-high` only to escalate (it costs about twice the tokens and several times the time); never `medium` or `xhigh`. Gemini 3.8 Flash: fallback only, always `gemini-3.8-flash-high`. Gemini 4 Argon: `gemini-4-argon-medium` by default, `low` for simple questions, `high` only when the user asks.
 - Check `command -v agy` first. If it is missing, do the work directly.
 
 Allowed models only:
 
 - Claude via `claude-agent`: `opus`, `sonnet`, `haiku` (current versions). Never `fable`.
 - OpenAI via `openai`: `gpt-6-luna`, and `gpt-5.6-luna` as fallback only.
-- Google via `agy`: `gemini-3.8-flash-high`, `gemini-4-argon-low`, `gemini-4-argon-medium`, `gemini-4-argon-high`. Nothing else. Do not use the Claude or GPT-OSS models inside `agy`, and never use a Flash model other than `high`.
+- Google via `agy`: `gemini-4-hydrogen-low`, `gemini-4-hydrogen-high`, `gemini-3.8-flash-high`, `gemini-4-argon-low`, `gemini-4-argon-medium`, `gemini-4-argon-high`. Nothing else. Do not use `gemini-4-hydrogen-medium`, `gemini-4-hydrogen-xhigh`, the Claude or GPT-OSS models inside `agy`, or a Flash model other than `high`.
 - DeepSeek via `deepseek`: `deepseek-flash` only. Never `deepseek-v4-pro`.
 - OpenCode: only models whose name ends in `-free`. Not `big-pickle`.
 
@@ -122,6 +123,7 @@ Limits:
 - At most 2 delegations per task. Ask the user before a third.
 - Send one complete prompt per call. Do not split a task into many small calls.
 - Do not delegate trivial work. Do it directly.
+- Counting, joining rows, sums, and other exact aggregation over a file or log: run a script with `shell` (`grep`, `awk`, or Python) instead of asking a model to read it. In tests a model got a cross-line count wrong at `low` and `medium` and spent about 80k tokens to get it right at `high`; a script is exact and costs almost nothing. Use models for summaries and understanding.
 - If a call fails with a rate-limit or plan-limit error, do not retry. Stop using that provider for the rest of the session, move to the next option in the order above or do the work directly, and tell the user.
 - If Claude shows a usage warning, or the main session is near its limit, stop delegating to Claude agents for the rest of the session.
 
