@@ -15,7 +15,7 @@ Use SSH if you have a key on GitHub, otherwise HTTPS:
     alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
     dot checkout            # move conflicting old files away first
     dot config status.showUntrackedFiles no
-    ./install.sh            # adds one line to ~/.bashrc that loads ~/.bashrc.custom
+    ./install.sh            # links ~/.bashrc.custom and installs the tools below (add --with-node for nvm)
 
 `dot checkout` also brings the third-party skills in `.config/opencode/skills/`, so they do not need to be installed separately.
 
@@ -27,6 +27,9 @@ Use SSH if you have a key on GitHub, otherwise HTTPS:
 - `mkdir -p /tmp/agy-work ~/docs-in ~/mineru-downloads`
 
 ## Install tools
+`./install.sh` already runs every command in this section (it skips tools that are installed).
+The steps below are the manual version and the reference for what it does.
+
 Do this before opening a new shell, because `.bashrc` runs `oh-my-posh` at startup.
 Both tools install to `~/.local/bin`, which `.bashrc` already adds to `PATH`.
 
