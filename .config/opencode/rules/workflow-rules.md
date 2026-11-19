@@ -43,6 +43,16 @@ Express all times and dates in JST (UTC+9). Convert from other time zones and ne
 - Run the script with `python3`, using the full path given in the skill.
 - Check typography pairing, color contrast, responsive reflow, and keyboard focus states.
 - Avoid generic AI purple/pink gradients and chips or badges that wrap badly.
+- Emil Kowalski skills cover motion and interaction details. Keep `ui-ux-pro-max` for layout, color, typography, and the design system, and add one matching Emil skill on top. Load only the one or two that fit, never the whole set:
+  - Build motion on the web: `animate`. React Native or Expo only: `animate-expo`.
+  - Animation drops frames or stutters: `animation-performance`.
+  - Several elements moving together (stagger, hero entrance, view swap): `choreograph`.
+  - Drag, swipe, sheets, pull-to-refresh: `gestures`. Web app that feels wrong on a phone: `mobile-native`.
+  - Press, hover, tooltip, popover polish with no narrower skill: `emil-design-eng`. Apple-style fluid motion: `apple-design`.
+  - Stress-test a component with worst-case data: `break-ui`. Sonner toasts: `ask-sonner`.
+  - Plan fixes across a codebase (read-only): `improve-animations`. Find missing motion (read-only): `find-animation-opportunities`. Too much motion: `remove-animations`. Name an effect: `animation-vocabulary`.
+  - `review-animations`, `prototype`, `pick-ui-library`, `learn-taste`, and `ask-emil` are marked user-invoked only. Do not load them yourself; tell the user which one fits and let them run it.
+- `write-swift`: load only when the task involves Swift code. Never for web, JavaScript, or TypeScript work.
 
 ## 6. Pre-completion review (`code-review`)
 

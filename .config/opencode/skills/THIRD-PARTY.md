@@ -10,6 +10,7 @@ License texts are in `LICENSES/`.
 | humanizer | https://github.com/blader/humanizer | MIT, (c) 2025 Siqi Chen. See `LICENSES/humanizer.LICENSE` |
 | ponytail | https://github.com/DietrichGebert/ponytail | MIT, (c) 2026 DietrichGebert. See `LICENSES/ponytail.LICENSE` |
 | context7-mcp | https://github.com/upstash/context7 | MIT, (c) 2021 Upstash, Inc. See `LICENSES/context7.LICENSE` |
+| animate, animate-expo, animation-performance, animation-vocabulary, apple-design, ask-emil, ask-sonner, break-ui, choreograph, emil-design-eng, find-animation-opportunities, gestures, improve-animations, learn-taste, mobile-native, pick-ui-library, prototype, remove-animations, review-animations, write-swift | https://github.com/emilkowalski/skills | MIT, (c) 2026 Emil Kowalski. See `LICENSES/emilkowalski-skills.LICENSE` |
 
 ## Notes
 
