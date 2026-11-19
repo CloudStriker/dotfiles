@@ -74,7 +74,7 @@ Check both:
       curl -fsSL https://antigravity.google/cli/install.sh | bash
 
   It installs to `~/.local/bin/agy`. The first run asks you to sign in.
-- `btop`, from Ubuntu's own repository. Its theme is in the last section:
+- `btop`, from Ubuntu's own repository. `install.sh` also sets up its theme (see "btop theme" below):
 
       sudo apt install -y btop
 
@@ -130,6 +130,10 @@ Without a token the server falls back to a free mode with about 20 pages and 10 
 ## btop theme (Catppuccin Mocha)
 
 Source: https://github.com/catppuccin/btop (MIT)
+
+`install.sh` does this for you: it downloads the theme if missing, then sets `color_theme = "catppuccin_mocha"`
+in `~/.config/btop/btop.conf` (creating the file if it does not exist). The theme file and `btop.conf`
+are not tracked in this repo. Manual version:
 
     mkdir -p ~/.config/btop/themes
     curl -fsSL https://raw.githubusercontent.com/catppuccin/btop/main/themes/catppuccin_mocha.theme \

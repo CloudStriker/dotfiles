@@ -18,6 +18,19 @@ need() {
 
 mkdir -p /tmp/agy-work ~/docs-in ~/mineru-downloads
 
+# btop theme: Catppuccin Mocha (https://github.com/catppuccin/btop, MIT).
+theme="$HOME/.config/btop/themes/catppuccin_mocha.theme"
+conf="$HOME/.config/btop/btop.conf"
+if [ ! -s "$theme" ]; then
+  mkdir -p "$(dirname "$theme")"
+  curl -fsSL https://raw.githubusercontent.com/catppuccin/btop/main/themes/catppuccin_mocha.theme -o "$theme"
+fi
+if [ ! -f "$conf" ]; then
+  echo 'color_theme = "catppuccin_mocha"' > "$conf"
+elif ! grep -q '^color_theme = ".*catppuccin_mocha' "$conf"; then
+  sed -i 's|^color_theme = .*|color_theme = "catppuccin_mocha"|' "$conf"
+fi
+
 tools=(uv oh-my-posh opencode claude agy btop)
 
 # report <title>: prints each tool as ok or MISSING and sets $missing to the count.
