@@ -15,11 +15,13 @@ Use SSH if you have a key on GitHub, otherwise HTTPS:
     alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
     dot checkout            # move conflicting old files away first
     dot config status.showUntrackedFiles no
+    ./install.sh            # adds one line to ~/.bashrc that loads ~/.bashrc.custom
 
 `dot checkout` also brings the third-party skills in `.config/opencode/skills/`, so they do not need to be installed separately.
 
 ## Not in this repo (recreate by hand)
 
+- `~/.bashrc` itself (only `~/.bashrc.custom` is tracked; `install.sh` links the two)
 - `~/.secrets/context7_key`, `~/.secrets/exa_key`, and `~/.secrets/mineru_token` (see "Secrets" below)
 - Binaries: `uv`, `oh-my-posh`, `opencode`, `claude`, `agy`, `btop`, and optionally `nvm` (see "Install tools" below), plus `docker` (see "MinerU")
 - `mkdir -p /tmp/agy-work ~/docs-in ~/mineru-downloads`

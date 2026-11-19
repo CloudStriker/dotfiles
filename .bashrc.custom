@@ -1,0 +1,7 @@
+# Personal shell config, tracked in the dotfiles repo. Sourced from ~/.bashrc by install.sh.
+
+export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$PATH"
+
+eval "$(oh-my-posh init bash --config ~/.config/oh-my-posh/themes/clicknow.omp.json)"
+
+alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
