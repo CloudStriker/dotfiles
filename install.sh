@@ -16,6 +16,25 @@ need() {
   bash -c "$2"
 }
 
+mkdir -p /tmp/agy-work ~/docs-in ~/mineru-downloads
+
+tools=(uv oh-my-posh opencode claude agy btop)
+
+# report <title>: prints each tool as ok or MISSING and sets $missing to the count.
+report() {
+  missing=0
+  echo "== $1 =="
+  for t in "${tools[@]}"; do
+    if command -v "$t" >/dev/null 2>&1; then echo "  ok       $t"; else echo "  MISSING  $t"; missing=$((missing + 1)); fi
+  done
+}
+
+report "before"
+if [ "$missing" -eq 0 ] && [ "${1:-}" != "--with-node" ]; then
+  echo "all tools present, nothing to install"
+  exit 0
+fi
+
 sudo apt update
 sudo apt install -y ca-certificates curl unzip btop
 
@@ -31,5 +50,7 @@ if [ "${1:-}" = "--with-node" ] && [ ! -s "$HOME/.nvm/nvm.sh" ]; then
   nvm install --lts
 fi
 
-mkdir -p /tmp/agy-work ~/docs-in ~/mineru-downloads
+hash -r
+report "after"
+[ "$missing" -eq 0 ] || { echo "$missing tool(s) still missing, check the output above"; exit 1; }
 echo "done. open a new shell, then sign in: claude, agy, and /connect in opencode"
