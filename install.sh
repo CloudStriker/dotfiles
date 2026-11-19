@@ -31,7 +31,7 @@ elif ! grep -q '^color_theme = ".*catppuccin_mocha' "$conf"; then
   sed -i 's|^color_theme = .*|color_theme = "catppuccin_mocha"|' "$conf"
 fi
 
-tools=(uv oh-my-posh opencode claude agy btop)
+tools=(uv oh-my-posh opencode claude agy btop fzf zoxide)
 
 # report <title>: prints each tool as ok or MISSING and sets $missing to the count.
 report() {
@@ -49,7 +49,7 @@ if [ "$missing" -eq 0 ] && [ "${1:-}" != "--with-node" ]; then
 fi
 
 sudo apt update
-sudo apt install -y ca-certificates curl unzip btop
+sudo apt install -y ca-certificates curl unzip btop fzf zoxide
 
 need uv          'curl -LsSf https://astral.sh/uv/install.sh | sh'
 need oh-my-posh  'curl -s https://ohmyposh.dev/install.sh | bash -s'
