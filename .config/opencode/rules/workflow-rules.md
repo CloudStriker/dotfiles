@@ -101,7 +101,8 @@ agy --mode plan --sandbox --print-timeout 300s --model <model> \
 - Always use `--mode plan` and `--sandbox`. Without plan mode, `agy` can write files. Plan mode needs the `--settings` allow rule above, because it starts by running `pwd && ls -la` and headless mode cannot ask for permission. Do not widen that allow list.
 - If a call stops with "a tool required the command permission", do not retry and do not use `--dangerously-skip-permissions`. Report the message to the user.
 - Run `agy` from an empty scratch directory such as `/tmp/agy-work`, never from the project or home directory. Put the text to analyze in the prompt, or copy only the needed files into the scratch directory.
-- Plan mode replies with a plan or a short answer, and it cannot run read commands like `cat`. Pass file contents inside the prompt.
+- Plan mode replies with a plan or a short answer, and it cannot run read commands like `cat`. Pass file contents inside the prompt. The `agy-argon` and `agy-hydrogen` relays can do this for you: list the file paths (at most 10) in the request and it reads them with its `read` tool and pastes the excerpts into the prompt. Never ask a relay to read files with `shell`; its shell permission allows only the single `agy` command.
+- Sending closed-source repository code to an `agy-*` subagent sends it to Google, and through the relay model. `agy-argon` and `agy-hydrogen` relay through Claude Haiku, not a `-free` model, for this reason. Do it only when the user has said it is allowed.
 - Start every prompt with: "Analysis only. Do not create, edit, or delete any file."
 - After each call, list the scratch directory. If it changed unexpectedly, tell the user.
 - Never use `--dangerously-skip-permissions`.
