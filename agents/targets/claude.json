@@ -1,0 +1,96 @@
+{
+  "agents": [
+    {
+      "name": "architect",
+      "prompt": "architect",
+      "description": "Claude Opus for multi-file architecture and bugs that persist after repeated failed checks. Expensive in quota; at most one call per task. Read-only advice.",
+      "model": "opus",
+      "effort": "medium",
+      "tools": [
+        "Read",
+        "Grep",
+        "Glob"
+      ],
+      "disallowedTools": [
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "maxTurns": 12
+    },
+    {
+      "name": "reviewer",
+      "prompt": "reviewer",
+      "description": "Claude Sonnet for an independent second opinion on a design or a diff. Read-only.",
+      "model": "sonnet",
+      "effort": "medium",
+      "tools": [
+        "Read",
+        "Grep",
+        "Glob"
+      ],
+      "disallowedTools": [
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "maxTurns": 8
+    },
+    {
+      "name": "worker",
+      "prompt": "worker",
+      "description": "Claude Sonnet for coding work that needs real reasoning. Read-only; returns code for the caller to apply.",
+      "model": "sonnet",
+      "effort": "medium",
+      "tools": [
+        "Read",
+        "Grep",
+        "Glob"
+      ],
+      "disallowedTools": [
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "maxTurns": 10
+    },
+    {
+      "name": "worker-haiku",
+      "prompt": "worker",
+      "description": "Claude Haiku for quick mechanical work such as renames, boilerplate, regex, and simple edits. Read-only; returns code for the caller to apply.",
+      "model": "haiku",
+      "effort": "low",
+      "tools": [
+        "Read",
+        "Grep",
+        "Glob"
+      ],
+      "disallowedTools": [
+        "Write",
+        "Edit",
+        "Bash"
+      ],
+      "maxTurns": 8
+    },
+    {
+      "name": "pr-writer",
+      "prompt": "pr-writer",
+      "description": "Writes PR.md for the current git branch, with a new branch name, commit message, PR title, and PR body. Reads git only; never commits or pushes.",
+      "model": "haiku",
+      "effort": "low",
+      "tools": [
+        "Read",
+        "Write",
+        "Bash"
+      ],
+      "disallowedTools": [
+        "Edit"
+      ],
+      "maxTurns": 10,
+      "skills": [
+        "pr",
+        "humanizer"
+      ]
+    }
+  ]
+}

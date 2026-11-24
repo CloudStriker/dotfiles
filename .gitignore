@@ -1,4 +1,3 @@
-# Bare dotfiles repo with $HOME as the work tree: keep these out of it.
-docs-in/
-mineru-downloads/
-.secrets/
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,44 @@
+{
+  "agents": [
+    {
+      "name": "architect",
+      "prompt": "architect",
+      "description": "Senior architect for multi-file architecture and bugs that persist after repeated failed checks. Read-only advice.",
+      "mainAgent": false,
+      "subagent": true,
+      "model": "inherit",
+      "commandExecutionPolicy": "off"
+    },
+    {
+      "name": "reviewer",
+      "prompt": "reviewer",
+      "description": "Independent reviewer for a second opinion on a design or a diff. Read-only.",
+      "mainAgent": false,
+      "subagent": true,
+      "model": "inherit",
+      "commandExecutionPolicy": "off"
+    },
+    {
+      "name": "worker",
+      "prompt": "worker",
+      "description": "Read-only coding worker for careful reasoning or mechanical edits; returns code for the caller to apply.",
+      "mainAgent": false,
+      "subagent": true,
+      "model": "inherit",
+      "commandExecutionPolicy": "off"
+    },
+    {
+      "name": "pr-writer",
+      "prompt": "pr-writer",
+      "description": "Writes PR.md for the current git branch, with a new branch name, commit message, PR title, and PR body. Reads git only; never commits or pushes.",
+      "mainAgent": false,
+      "subagent": true,
+      "model": "inherit",
+      "commandExecutionPolicy": "sandbox",
+      "skills": [
+        "pr",
+        "humanizer"
+      ]
+    }
+  ]
+}

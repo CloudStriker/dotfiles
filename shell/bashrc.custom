@@ -4,8 +4,6 @@ export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$PATH"
 
 eval "$(oh-my-posh init bash --config ~/.config/oh-my-posh/themes/clicknow.omp.json)"
 
-alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-
 # fzf (apt's 0.44 has no `fzf --bash`, so source the files shipped with the package) and zoxide.
 for f in key-bindings completion; do
   [ -f /usr/share/doc/fzf/examples/$f.bash ] && . /usr/share/doc/fzf/examples/$f.bash

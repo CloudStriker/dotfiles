@@ -1,0 +1,32 @@
+{
+  "agents": [
+    {
+      "name": "architect",
+      "prompt": "architect",
+      "description": "GPT-6 Luna (high reasoning) for multi-file architecture and bugs that persist after repeated failed checks. Read-only advice.",
+      "model": "gpt-6-luna",
+      "model_reasoning_effort": "high"
+    },
+    {
+      "name": "reviewer",
+      "prompt": "reviewer",
+      "description": "GPT-6 Luna for an independent second opinion on a design or a diff. Read-only.",
+      "model": "gpt-6-luna",
+      "model_reasoning_effort": "medium"
+    },
+    {
+      "name": "worker",
+      "prompt": "worker",
+      "description": "GPT-6 Luna coding worker for careful reasoning and refactors. Read-only; returns code for the caller to apply.",
+      "model": "gpt-6-luna",
+      "model_reasoning_effort": "medium"
+    },
+    {
+      "name": "pr_writer",
+      "prompt": "pr-writer",
+      "description": "Writes PR.md for the current git branch, with a new branch name, commit message, PR title, and PR body. Reads git only; never commits or pushes.",
+      "model": "gpt-6-luna",
+      "model_reasoning_effort": "low"
+    }
+  ]
+}

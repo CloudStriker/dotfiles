@@ -1,0 +1,55 @@
+{
+  "servers": {
+    "context7": {
+      "transport": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "auth": {
+        "type": "bearer_file",
+        "secret_file": "~/.secrets/context7_key",
+        "required": true
+      }
+    },
+    "exa": {
+      "transport": "http",
+      "url": "https://mcp.exa.ai/mcp",
+      "auth": {
+        "type": "bearer_file",
+        "secret_file": "~/.secrets/exa_key",
+        "required": true
+      }
+    },
+    "firecrawl": {
+      "transport": "http",
+      "url": "https://mcp.firecrawl.dev/v2/mcp-oauth"
+    },
+    "arxiv": {
+      "transport": "stdio",
+      "command": "uvx",
+      "args": [
+        "arxiv-mcp-server"
+      ]
+    },
+    "mineru": {
+      "transport": "stdio",
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--user", "1000:1000",
+        "-e", "HOME=/tmp",
+        "-e", "PYTHONUNBUFFERED=1",
+        "-e", "MINERU_API_TOKEN",
+        "-e", "OUTPUT_DIR={HOME}/mineru-downloads",
+        "-v", "{HOME}/docs-in:{HOME}/docs-in:ro",
+        "-v", "{HOME}/mineru-downloads:{HOME}/mineru-downloads",
+        "ghcr.io/astral-sh/uv:python3.12-bookworm-slim",
+        "uvx", "mineru-open-mcp"
+      ],
+      "env_secret_files": {
+        "MINERU_API_TOKEN": {
+          "secret_file": "~/.secrets/mineru_token",
+          "required": false
+        }
+      }
+    }
+  }
+}
